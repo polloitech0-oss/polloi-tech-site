@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polloi Tech</title>
+<meta name="description" content="Polloi Tech builds websites, stores, ERP, POS, CRM, dashboards, AI agents and business bots for brands and organizations in Egypt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Cairo:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Polloi Tech: night indigo, one electric blue → violet signal, mono labels like a system console.
+     Layout: the hero IS a working demo (a bot running a stock room); the rest is proof, then options. */
+  --ink:#06082A;
+  --deep:#0C1046;
+  --panel:#121859;
+  --line:rgba(170,176,255,.16);
+  --text:#EEF0FF;
+  --muted:#A3A9DA;
+  --blue:#2F6BFF;
+  --violet:#7B5CFF;
+  --ok:#3DDC97;
+  --warn:#FFB547;
+  --display:"Sora","Helvetica Neue",Arial,sans-serif;
+  --body:"Manrope","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --ar:"Cairo","Manrope",sans-serif;
+  --gut:clamp(16px,4vw,56px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.03em;line-height:1.05;text-wrap:balance}
+h2{font-size:clamp(2.1rem,4.8vw,3.8rem);font-weight:600}
+h3{font-size:1.2rem;font-weight:600;letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gut)}
+.mono{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:#9FB6FF}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:13px 22px;font-weight:700;font-size:.95rem;text-decoration:none;border:1px solid transparent;transition:transform .2s,box-shadow .2s,border-color .2s}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;box-shadow:0 10px 30px rgba(79,92,255,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(79,92,255,.5)}
+.btn-ghost{border-color:var(--line);background:rgba(255,255,255,.04)}
+.btn-ghost:hover{border-color:#9FB6FF}
+section{position:relative;padding:clamp(72px,10vw,120px) 0}
+.head{display:grid;grid-template-columns:1fr minmax(0,420px);gap:20px 48px;align-items:end;margin-bottom:clamp(32px,5vw,56px)}
+.head .mono{display:block;margin-bottom:14px}
+.head p{color:var(--muted);font-size:1.03rem}
+@media (max-width:820px){.head{grid-template-columns:1fr}}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:40;background:rgba(6,8,42,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:600;font-size:1.05rem}
+.mark img{height:24px;width:auto}
+.mark span{border-left:1px solid var(--line);padding-left:10px}
+.links{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.links::-webkit-scrollbar{display:none}
+.links a{text-decoration:none;font-size:.88rem;color:var(--muted);padding:8px 12px;border-radius:999px;white-space:nowrap}
+.links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.nav .btn{padding:9px 18px;font-size:.86rem}
+@media (max-width:860px){.nav .btn{display:none}}
+@media (max-width:640px){.links{display:none}.nav .btn{display:inline-flex;margin-left:auto}}
+
+/* HERO */
+.hero{padding:clamp(48px,7vw,88px) 0 clamp(64px,8vw,96px);overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto;height:900px;z-index:-1;background:radial-gradient(40% 50% at 78% 30%,rgba(123,92,255,.45),transparent 70%),radial-gradient(35% 45% at 18% 70%,rgba(47,107,255,.35),transparent 70%)}
+.orb{position:absolute;border-radius:50%;z-index:-1;background:radial-gradient(circle at 32% 30%,#cfe0ff,#4f7dff 38%,#1d2fb8 70%,#0c1046);box-shadow:0 20px 60px rgba(47,107,255,.45);animation:float 9s ease-in-out infinite}
+.orb.a{width:84px;height:84px;top:90px;right:4%}
+.orb.b{width:46px;height:46px;bottom:70px;left:46%;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-16px)}}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);gap:clamp(32px,5vw,64px);align-items:center}
+@media (max-width:980px){.hero .wrap{grid-template-columns:1fr}}
+.hero .wrap>*,.demo-body>*{min-width:0}
+.hero h1{font-size:clamp(2.6rem,6vw,4.9rem);font-weight:700;letter-spacing:-.045em;line-height:.98;margin:18px 0 22px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#8fb0ff,#b49cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lede{font-size:1.08rem;color:#C9CEF2;max-width:46ch}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
+.pills span{font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:#C9CEF2;background:rgba(255,255,255,.03)}
+
+/* DEMO */
+.demo{border:1px solid var(--line);border-radius:24px;background:linear-gradient(180deg,rgba(18,24,89,.9),rgba(12,16,70,.9));box-shadow:0 40px 100px rgba(0,0,0,.45);overflow:hidden}
+.demo-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.demo-top b{font-family:var(--display);font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:10px}
+.live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.demo-top small{font-family:var(--mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em}
+.demo-body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+@media (max-width:620px){.demo-body{grid-template-columns:1fr}}
+.chat{display:flex;flex-direction:column;border-right:1px solid var(--line);min-height:430px}
+@media (max-width:620px){.chat{border-right:0;border-bottom:1px solid var(--line);min-height:340px}.msgs{max-height:340px}}
+.msgs{flex:1;padding:16px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;max-height:430px}
+.m{max-width:88%;padding:9px 13px;border-radius:14px;font-size:.88rem;line-height:1.45;animation:pop .25s ease-out}
+@keyframes pop{from{opacity:.0;transform:translateY(6px)}}
+.m.bot{background:rgba(255,255,255,.07);border-top-left-radius:4px}
+.m.me{align-self:flex-end;background:linear-gradient(135deg,var(--blue),var(--violet));border-top-right-radius:4px}
+.m.ar{font-family:var(--ar);direction:rtl;text-align:right}
+.m b{color:#fff}
+.m .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.m .acts button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);border-radius:999px;padding:4px 11px;font-size:.78rem;font-weight:600}
+.m .acts button:hover{background:rgba(255,255,255,.18)}
+.typing{display:inline-flex;gap:4px}.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:.25}}
+.sugg{display:flex;gap:6px;padding:0 12px 10px;overflow-x:auto;scrollbar-width:none}
+.sugg::-webkit-scrollbar{display:none}
+.sugg button{flex:0 0 auto;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:6px 12px;font-size:.78rem;color:#C9CEF2;white-space:nowrap}
+.sugg button:hover{border-color:#9FB6FF;color:#fff}
+.sugg button.ar{font-family:var(--ar)}
+.composer{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid var(--line)}
+.composer input{flex:1;min-width:0;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-size:.88rem}
+.composer input::placeholder{color:#7d84b8}
+.composer button{border:0;border-radius:50%;width:42px;height:42px;background:linear-gradient(135deg,var(--blue),var(--violet));font-size:1rem}
+.board{padding:16px;display:flex;flex-direction:column;gap:14px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.18)}
+.kpi small{display:block;font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.kpi b{font-family:var(--display);font-weight:600;font-size:1.08rem;white-space:nowrap;font-variant-numeric:tabular-nums;transition:color .4s}
+.kpi b.flash{color:var(--ok)}
+.stock h4{margin:0 0 8px;font-family:var(--mono);font-weight:600;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+.row{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:.82rem}
+.row span{font-variant-numeric:tabular-nums;font-weight:600}
+.row .bar{grid-column:1/-1;height:6px;border-radius:6px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}
+.row .bar i{position:absolute;inset:0 auto 0 0;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--violet));transition:width .6s ease}
+.row.low .bar i{background:var(--warn)}
+.row.low span{color:var(--warn)}
+.row .min{position:absolute;top:-2px;bottom:-2px;width:2px;background:rgba(255,255,255,.55)}
+.po{font-size:.78rem;border:1px dashed rgba(61,220,151,.5);color:#bff3dc;border-radius:10px;padding:8px 10px;display:none}
+.po.on{display:block;animation:pop .3s ease-out}
+.demo-note{padding:9px 16px;border-top:1px solid var(--line);font-size:.72rem;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* WORK */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 16px;font-size:.86rem;color:var(--muted)}
+.chip:hover{color:#fff;border-color:#9FB6FF}
+.chip[aria-pressed=true]{background:#fff;color:var(--ink);border-color:#fff}
+.sites{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:980px){.sites{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.sites{grid-template-columns:1fr}}
+.site{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--deep);text-decoration:none;transition:transform .25s,border-color .25s,box-shadow .25s}
+.site:hover{transform:translateY(-4px);border-color:rgba(159,182,255,.5);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.site[hidden]{display:none}
+.chrome{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#0a0d33;border-bottom:1px solid var(--line)}
+.chrome i{width:8px;height:8px;border-radius:50%;background:#2c3270}
+.chrome span{margin-left:8px;font-family:var(--mono);font-size:.68rem;color:var(--muted);background:rgba(255,255,255,.05);border-radius:6px;padding:2px 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.shot{aspect-ratio:16/10;overflow:hidden;background:#0a0d33}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1.2s ease}
+.site:hover .shot img{transform:scale(1.04)}
+.meta{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px 18px}
+.meta h3{margin-bottom:2px}
+.meta p{font-size:.86rem;color:var(--muted)}
+.meta .go{font-size:.8rem;font-weight:700;color:#9FB6FF;white-space:nowrap;padding-top:3px}
+.tagk{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:#C9CEF2}
+.site.wip .shot{display:grid;place-items:center;background:radial-gradient(70% 80% at 50% 40%,#fff,#efe9df)}
+.site.wip .shot img{width:42%;height:auto;object-fit:contain}
+.wip-pill{color:var(--warn);border-color:rgba(255,181,71,.45)}
+
+/* SOLUTIONS */
+.sol{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:980px){.sol{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.sol{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:18px;padding:22px;background:linear-gradient(180deg,rgba(18,24,89,.65),rgba(12,16,70,.35));display:flex;flex-direction:column;gap:10px}
+.card .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(47,107,255,.25),rgba(123,92,255,.25));border:1px solid var(--line)}
+.card .ic svg{width:22px;height:22px;stroke:#BFD0FF;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card p{font-size:.9rem;color:var(--muted)}
+.card ul{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.card li{font-size:.74rem;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:#C9CEF2}
+.card.hl{background:linear-gradient(160deg,rgba(47,107,255,.35),rgba(123,92,255,.3));border-color:rgba(159,182,255,.4)}
+
+/* CASES */
+.cases{background:linear-gradient(180deg,var(--deep),var(--ink))}
+.case-list{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:start}
+@media (max-width:900px){.case-list{grid-template-columns:1fr}}
+.case-tabs{display:flex;flex-direction:column;gap:8px}
+@media (max-width:900px){.case-tabs{flex-direction:row;overflow-x:auto;padding-bottom:6px}}
+.case-tabs button{display:flex;gap:12px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:14px;padding:14px 16px;transition:all .2s;min-width:240px}
+.case-tabs button small{font-family:var(--mono);font-size:.68rem;color:#9FB6FF;padding-top:3px}
+.case-tabs button b{display:block;font-weight:600;font-size:.95rem;line-height:1.3}
+.case-tabs button span{font-size:.78rem;color:var(--muted)}
+.case-tabs button[aria-selected=true]{border-color:rgba(159,182,255,.55);background:linear-gradient(135deg,rgba(47,107,255,.22),rgba(123,92,255,.18))}
+.case-view{border:1px solid var(--line);border-radius:22px;padding:clamp(20px,3vw,32px);background:rgba(12,16,70,.6)}
+.case-view h3{font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:600;letter-spacing:-.025em;margin:10px 0 20px}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.ba{grid-template-columns:1fr}}
+.ba > div{border-radius:16px;padding:18px;border:1px solid var(--line)}
+.ba .before{background:rgba(255,181,71,.06);border-color:rgba(255,181,71,.28)}
+.ba .after{background:rgba(61,220,151,.06);border-color:rgba(61,220,151,.3)}
+.ba small{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.ba .before small{color:var(--warn)}.ba .after small{color:var(--ok)}
+.ba ul{margin:10px 0 0;padding-left:18px;font-size:.92rem;color:#D6DAF7;display:grid;gap:6px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:20px}
+.flow span{font-family:var(--mono);font-size:.72rem;border:1px solid var(--line);background:rgba(0,0,0,.2);border-radius:8px;padding:6px 10px}
+.flow em{font-style:normal;color:#9FB6FF}
+.built{margin-top:18px;font-size:.84rem;color:var(--muted)}
+.built b{color:#fff}
+
+/* AUTOMATIONS */
+.autos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:980px){.autos{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.autos{grid-template-columns:1fr}}
+.auto{border:1px solid var(--line);border-radius:16px;padding:18px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:12px;transition:border-color .2s,background .2s}
+.auto.on{border-color:rgba(61,220,151,.45);background:rgba(61,220,151,.05)}
+.auto-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.auto b{font-weight:600;line-height:1.3}
+.sw{position:relative;width:44px;height:26px;flex:0 0 auto;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.08);padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#C9CEF2;transition:transform .2s,background .2s}
+.sw[aria-checked=true]{background:rgba(61,220,151,.3);border-color:rgba(61,220,151,.6)}
+.sw[aria-checked=true]::after{transform:translateX(18px);background:var(--ok)}
+.trig{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:grid;gap:4px}
+.trig i{font-style:normal;color:#9FB6FF}
+.auto .st{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.auto.on .st{color:var(--ok)}
+.autosum{margin-top:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;font-size:.9rem;color:var(--muted)}
+.autosum b{color:#fff;font-variant-numeric:tabular-nums}
+
+/* PROCESS */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.step{padding:22px 18px 0 0}
+.step+.step{padding-left:18px;border-left:1px solid var(--line)}
+.step em{font-style:normal;font-family:var(--mono);font-size:.74rem;color:#9FB6FF}
+.step b{display:block;font-family:var(--display);font-weight:600;font-size:1.2rem;margin:8px 0 6px}
+.step p{font-size:.9rem;color:var(--muted)}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.step:nth-child(odd){padding-left:0;border-left:0}.step{border-top:1px solid var(--line);padding-bottom:16px}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}.step{padding-left:0!important;border-left:0!important}}
+
+/* CTA */
+.cta-box{position:relative;overflow:hidden;border-radius:28px;padding:clamp(28px,5vw,60px);background:radial-gradient(70% 120% at 100% 100%,rgba(123,92,255,.9),transparent 60%),radial-gradient(60% 100% at 0% 0%,rgba(47,107,255,.85),transparent 65%),#14196a;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:center}
+@media (max-width:820px){.cta-box{grid-template-columns:1fr}}
+.cta-box h2{max-width:18ch}
+.cta-box p{margin-top:14px;color:#E1E5FF;max-width:48ch}
+.qrbox{background:#fff;border-radius:18px;padding:14px;color:#0C1046;text-align:center;font-size:.8rem;font-weight:700;width:180px}
+.qrbox img{width:150px;height:150px;margin:0 auto 6px}
+.contact{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.contact span{font-size:.86rem;background:rgba(255,255,255,.12);border-radius:999px;padding:7px 14px}
+footer{padding:30px 0 48px;color:var(--muted);font-size:.84rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Polloi Tech, back to top"><img src="assets/brand/polloi-mark.png" alt=""><span>tech</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#work">Websites</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#cases">Problems we fix</a>
+      <a href="#automations">Automations</a>
+      <a href="#process">Process</a>
+    </nav>
+    <a class="btn btn-primary" href="https://wa.me/201093322570?text=Hi%20Polloi%20Tech">Start a project</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <span class="orb a" aria-hidden="true"></span><span class="orb b" aria-hidden="true"></span>
+  <div class="wrap">
+    <div>
+      <span class="mono">Polloi Tech · powered by Polloi</span>
+      <h1>We build software that <em>runs your business.</em></h1>
+      <p class="lede">Websites and online stores, custom ERP and POS, CRM for every order, dashboards, AI agents and bots that do the work for you, any time of day. Built around how your business works, not the other way around.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://wa.me/201093322570?text=Hi%20Polloi%20Tech%2C%20I%27d%20like%20a%20demo">Book a free demo →</a>
+        <a class="btn btn-ghost" href="#work">See our websites</a>
+      </div>
+      <div class="pills" aria-label="What we build">
+        <span>Websites &amp; e-commerce</span><span>ERP</span><span>POS</span><span>CRM</span><span>AI agents</span><span>Bots</span><span>Dashboards</span><span>UI / UX</span>
+      </div>
+    </div>
+
+    <div class="demo" aria-label="Interactive demo: a stock bot for a factory">
+      <div class="demo-top">
+        <b><span class="live" aria-hidden="true"></span>Stock bot · Factory demo</b>
+        <small>WHATSAPP · 24/7</small>
+      </div>
+      <div class="demo-body">
+        <div class="chat">
+          <div class="msgs" id="msgs" aria-live="polite"></div>
+          <div class="sugg" id="sugg">
+            <button type="button">How much sugar is left?</button>
+            <button type="button">Today's sales</button>
+            <button type="button">Add 120 packaging boxes</button>
+            <button type="button" class="ar">كام كرتونة زيت فاضلة؟</button>
+            <button type="button">Send the weekly report</button>
+          </div>
+          <form class="composer" id="composer">
+            <label for="ask" class="sr" style="position:absolute;left:-9999px">Message the bot</label>
+            <input id="ask" autocomplete="off" placeholder="Ask anything… e.g. stock of flour">
+            <button type="submit" aria-label="Send">➤</button>
+          </form>
+        </div>
+        <div class="board">
+          <div class="kpis">
+            <div class="kpi"><small>Sales today</small><b id="kSales">EGP 48,250</b></div>
+            <div class="kpi"><small>Orders</small><b id="kOrders">37</b></div>
+          </div>
+          <div class="stock">
+            <h4><span>Stock room</span><span>min ▏</span></h4>
+            <div id="stock"></div>
+          </div>
+          <div class="po" id="po"></div>
+        </div>
+      </div>
+      <div class="demo-note"><span>Try it: tap a question or type your own.</span><span>Sample data</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="mono">Websites we built</span><h2>Live, selling and taking orders.</h2></div>
+      <p>Online stores, company websites and full platforms. Every one of these is live: open it and click around.</p>
+    </div>
+    <div class="chips" id="chips" role="toolbar" aria-label="Filter websites">
+      <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-f="store" aria-pressed="false">Online stores</button>
+      <button class="chip" type="button" data-f="company" aria-pressed="false">Company websites</button>
+      <button class="chip" type="button" data-f="platform" aria-pressed="false">Platforms</button>
+    </div>
+    <div class="sites" id="sites">
+      <a class="site" data-k="platform" href="https://polyeducate.com/">
+        <div class="chrome"><i></i><i></i><i></i><span>polyeducate.com</span></div>
+        <div class="shot"><img src="assets/shots/poly.webp" alt="Poly learning platform homepage" loading="lazy"></div>
+        <div class="meta"><div><h3>Poly</h3><p>Learning management system: courses, students, a code lab and checkout.</p><span class="tagk">Platform · LMS</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="platform" href="https://engezhaly.com/">
+        <div class="chrome"><i></i><i></i><i></i><span>engezhaly.com</span></div>
+        <div class="shot"><img src="assets/shots/engezhaly.webp" alt="Engezhaly freelance marketplace homepage" loading="lazy"></div>
+        <div class="meta"><div><h3>Engezhaly</h3><p>Freelance marketplace for Egypt: search, jobs, secure payments and dashboards.</p><span class="tagk">Platform · Marketplace</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="store" href="https://rube-eg.com/">
+        <div class="chrome"><i></i><i></i><i></i><span>rube-eg.com</span></div>
+        <div class="shot"><img src="assets/shots/rube.webp" alt="Rube activewear store homepage" loading="lazy"></div>
+        <div class="meta"><div><h3>Rube</h3><p>Activewear online store with collections, sizes, swatches and sales.</p><span class="tagk">Online store · Activewear</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="store" href="https://kickson.online/">
+        <div class="chrome"><i></i><i></i><i></i><span>kickson.online</span></div>
+        <div class="shot"><img src="assets/shots/kickson.webp" alt="Kickson streetwear store homepage" loading="lazy"></div>
+        <div class="meta"><div><h3>Kickson</h3><p>Sneaker and streetwear store for a New Cairo shop, built on Shopify.</p><span class="tagk">Online store · Streetwear</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="company" href="https://whitegoldeg.com/">
+        <div class="chrome"><i></i><i></i><i></i><span>whitegoldeg.com</span></div>
+        <div class="shot"><img src="assets/shots/whitegold.webp" alt="White Gold bathroom fittings website" loading="lazy"></div>
+        <div class="meta"><div><h3>White Gold</h3><p>Bathroom mixers maker: product catalog, Arabic &amp; English, quotation requests.</p><span class="tagk">Catalog · Manufacturing</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="company" href="https://www.lignartia.com/">
+        <div class="chrome"><i></i><i></i><i></i><span>lignartia.com</span></div>
+        <div class="shot"><img src="assets/shots/lignartia.webp" alt="Lignartia woodcraft website" loading="lazy"></div>
+        <div class="meta"><div><h3>Lignartia</h3><p>Bespoke woodcraft studio: services, portfolio and quote requests.</p><span class="tagk">Company · Woodcraft</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="company" href="https://etqan.com.eg/">
+        <div class="chrome"><i></i><i></i><i></i><span>etqan.com.eg</span></div>
+        <div class="shot"><img src="assets/shots/etqan.webp" alt="Etqan Consultancy website" loading="lazy"></div>
+        <div class="meta"><div><h3>Etqan Consultancy</h3><p>Business consultancy website built to win corporate clients.</p><span class="tagk">Company · Consulting</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <a class="site" data-k="company" href="https://polloimarketing.com/en">
+        <div class="chrome"><i></i><i></i><i></i><span>polloimarketing.com</span></div>
+        <div class="shot"><img src="assets/shots/polloi.webp" alt="Polloi Marketing agency website" loading="lazy"></div>
+        <div class="meta"><div><h3>Polloi Marketing</h3><p>Our agency's own site: services, booking and a free strategy call.</p><span class="tagk">Company · Agency</span></div><span class="go">Visit ↗</span></div>
+      </a>
+      <div class="site wip" data-k="company">
+        <div class="chrome"><i></i><i></i><i></i><span>Al Farouk Group</span></div>
+        <div class="shot"><img src="assets/brand/farouk.png" alt="Al Farouk Group logo"></div>
+        <div class="meta"><div><h3>Al Farouk Group</h3><p>Home and bathroom showroom website, launching with the new showroom.</p><span class="tagk wip-pill">In build</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="mono">Solutions</span><h2>Beyond websites: the systems behind the sales.</h2></div>
+      <p>For any brand, factory, shop or organization. We start from the problem, then build only what fixes it.</p>
+    </div>
+    <div class="sol">
+      <div class="card hl">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <h3>Business bots</h3>
+        <p>Ask the bot anything about your stock, sales or orders, or tell it to do something, on WhatsApp or Telegram, any time.</p>
+        <ul><li>Stock in / out</li><li>Reports</li><li>Arabic &amp; English</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/><path d="M19 4l1.5-1.5M5 4L3.5 2.5"/></svg></div>
+        <h3>AI agents</h3>
+        <p>Agents that reply to customers, qualify leads, book calls and hand off to your team when a human is needed.</p>
+        <ul><li>24/7 replies</li><li>Lead qualifying</li><li>Hand-off</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+        <h3>Custom ERP</h3>
+        <p>One system for inventory, purchasing, production, HR and accounts, shaped around your real workflow.</p>
+        <ul><li>Inventory</li><li>Purchasing</li><li>Production</li><li>HR</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="12" rx="2"/><path d="M8 19h8M12 15v4M8 8h8M8 11h4"/></svg></div>
+        <h3>POS systems</h3>
+        <p>Point of sale for shops and branches, synced with stock and with one view of sales across every branch.</p>
+        <ul><li>Multi-branch</li><li>Receipts</li><li>Stock sync</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h11"/><circle cx="19" cy="18" r="2"/></svg></div>
+        <h3>CRM &amp; order management</h3>
+        <p>Every order and every lead in one pipeline, with its status, owner and history, plus automatic customer updates.</p>
+        <ul><li>Order pipeline</li><li>Follow-ups</li><li>WhatsApp updates</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <h3>Dashboards &amp; data analysis</h3>
+        <p>Your sales, stock, ads and team numbers on one live screen, with the insight behind them, not just charts.</p>
+        <ul><li>Live KPIs</li><li>Reports</li><li>Forecasts</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <h3>Automation</h3>
+        <p>Connect payments, inventory, shipping, CRM and your messaging apps so routine work happens on its own.</p>
+        <ul><li>Integrations</li><li>Alerts</li><li>Scheduled tasks</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h3M8 17h6"/></svg></div>
+        <h3>Websites &amp; e-commerce</h3>
+        <p>Stores and business websites that look sharp and turn visitors into customers, on Shopify or fully custom.</p>
+        <ul><li>Shopify</li><li>Custom</li><li>Arabic &amp; English</li></ul>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></svg></div>
+        <h3>UI / UX design</h3>
+        <p>Research, flows and clickable prototypes you can test before a single line of code is written.</p>
+        <ul><li>User flows</li><li>Prototypes</li><li>Design systems</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases" class="cases">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="mono">Problems we fix</span><h2>Where businesses lose sales, and what we build instead.</h2></div>
+      <p>The problems we hear most from owners, and the system that solves each one.</p>
+    </div>
+    <div class="case-list">
+      <div class="case-tabs" role="tablist" aria-label="Problems" id="caseTabs"></div>
+      <div class="case-view" id="caseView" role="tabpanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTOMATIONS -->
+<section id="automations">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="mono">Ready-made automations</span><h2>Switch on what you need.</h2></div>
+      <p>Automations we've already built and can plug into your business in days. Turn them on to build your own pack.</p>
+    </div>
+    <div class="autos" id="autos"></div>
+    <div class="autosum"><span>Your pack: <b id="autoCount">0</b> automations selected</span><a class="btn btn-primary" id="autoAsk" href="https://wa.me/201093322570">Ask about these on WhatsApp</a></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><div><span class="mono">How we work</span><h2>From the first call to a system your team uses.</h2></div></div>
+    <div class="steps">
+      <div class="step"><em>01 · Discover</em><b>Map the problem</b><p>We sit with you and your team, follow how work happens today and find where time and sales leak.</p></div>
+      <div class="step"><em>02 · Design</em><b>See it first</b><p>UI/UX and a clickable prototype, so you approve the screens before we build.</p></div>
+      <div class="step"><em>03 · Build</em><b>Ship in stages</b><p>We launch the part that saves the most time first, then add the rest, with you testing each step.</p></div>
+      <div class="step"><em>04 · Support</em><b>Train &amp; improve</b><p>We train your team, watch the numbers and keep improving the system as you grow.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-box">
+      <div>
+        <span class="mono" style="color:#E1E5FF">Let's talk</span>
+        <h2 style="margin-top:14px">Tell us what slows your business down.</h2>
+        <p>Send us one problem on WhatsApp. We'll come back with how we'd solve it and a working demo.</p>
+        <div class="cta-row"><a class="btn btn-ghost" style="background:#fff;color:#14196a" href="https://wa.me/201093322570?text=Hi%20Polloi%20Tech">Message us on WhatsApp</a></div>
+        <div class="contact"><span>01093322570</span><span>polloitech0@gmail.com</span><span>@polloi_tech</span></div>
+      </div>
+      <div class="qrbox"><img src="assets/brand/wa-qr.svg" alt="QR code to message Polloi Tech on WhatsApp">Scan to chat</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Polloi Tech · powered by Polloi</span><a href="https://www.instagram.com/polloi_tech/" style="text-decoration:none">Instagram ↗</a></div></footer>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt=n=>n.toLocaleString('en-US');
+
+/* ---------- Stock bot demo ---------- */
+const S={ sugar:{n:'Sugar (50 kg sacks)',q:38,min:40,max:120,u:'sacks'}, flour:{n:'Flour (25 kg sacks)',q:86,min:30,max:120,u:'sacks'},
+          oil:{n:'Cooking oil (cartons)',q:64,min:25,max:120,u:'cartons',ar:'زيت'}, boxes:{n:'Packaging boxes',q:210,min:150,max:500,u:'boxes'} };
+let sales=48250, orders=37, poOpen=false;
+const stockEl=$('#stock');
+function renderStock(){
+  stockEl.innerHTML=Object.values(S).map(s=>{const p=Math.min(100,s.q/s.max*100),m=s.min/s.max*100;return `<div class="row ${s.q<s.min?'low':''}"><b style="font-weight:500">${s.n}</b><span>${fmt(s.q)}</span><div class="bar"><i style="width:${p}%"></i><span class="min" style="left:${m}%"></span></div></div>`}).join('');
+}
+renderStock();
+const msgs=$('#msgs');
+function add(html,who='bot',cls=''){const d=document.createElement('div');d.className=`m ${who} ${cls}`;d.innerHTML=html;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}
+function botSay(html,cls='',after){const t=add('<span class="typing"><i></i><i></i><i></i></span>','bot');setTimeout(()=>{t.innerHTML=html;if(cls)t.classList.add(...cls.split(' '));msgs.scrollTop=msgs.scrollHeight;after&&after(t)},reduce?0:650)}
+function flash(el){el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),900)}
+function intent(q){
+  const t=q.toLowerCase();
+  if(/زيت|oil/.test(t)) return 'oil';
+  if(/sugar|سكر/.test(t)) return 'sugar';
+  if(/flour|دقيق/.test(t)) return 'flour';
+  if(/(add|receive|زود|ضيف).*(box|كرتون)|box/.test(t)) return 'boxes';
+  if(/sale|مبيعات|بيع/.test(t)) return 'sales';
+  if(/report|تقرير/.test(t)) return 'report';
+  if(/order|طلب/.test(t)) return 'orders';
+  return 'help';
+}
+function reply(q){
+  const it=intent(q), ar=/[؀-ۿ]/.test(q);
+  if(it==='sugar'){
+    botSay(`<b>Sugar:</b> ${S.sugar.q} sacks left. That's under your minimum of ${S.sugar.min}. Want me to order 60 sacks from Al Nour Supplies?<div class="acts"><button type="button" data-a="po">Yes, order 60</button><button type="button" data-a="no">Not now</button></div>`);
+  } else if(it==='oil'){
+    botSay(ar?`فاضل <b>${S.oil.q} كرتونة زيت</b> في المخزن. الحد الأدنى ${S.oil.min}، يعني إحنا في الأمان. آخر سحب كان ١٢ كرتونة النهارده الصبح.`:`<b>Cooking oil:</b> ${S.oil.q} cartons, above the minimum of ${S.oil.min}. Last withdrawal: 12 cartons this morning.`, ar?'ar':'');
+  } else if(it==='flour'){
+    botSay(`<b>Flour:</b> ${S.flour.q} sacks. At this week's pace that lasts about 9 days.`);
+  } else if(it==='boxes'){
+    const n=(q.match(/\d+/)||[120])[0]*1; S.boxes.q+=n; renderStock();
+    botSay(`Done. Added <b>${n} packaging boxes</b>. New balance: ${fmt(S.boxes.q)}. Logged under your name at ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}.`);
+  } else if(it==='sales'){
+    botSay(`<b>Today so far:</b> EGP ${fmt(sales)} from ${orders} orders. Top item: cooking oil. That's 14% above last Tuesday.`);
+  } else if(it==='orders'){
+    sales+=1850;orders+=1;$('#kSales').textContent='EGP '+fmt(sales);$('#kOrders').textContent=orders;flash($('#kSales'));flash($('#kOrders'));
+    botSay(`New order recorded: <b>#5108</b>, EGP 1,850. Customer gets a WhatsApp confirmation now.`);
+  } else if(it==='report'){
+    botSay(`Your weekly report is ready and sent as a PDF: sales, top items, low stock and open purchase orders. 📄`);
+  } else {
+    botSay(`I can check stock, record stock in and out, create purchase orders, log orders and send reports. Try one of the buttons below.`);
+  }
+}
+function send(q){if(!q.trim())return;add(q.replace(/</g,'&lt;'),'me',/[؀-ۿ]/.test(q)?'ar':'');reply(q)}
+msgs.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-a]'); if(!b)return;
+  const box=b.parentElement; box.remove();
+  if(b.dataset.a==='po'){
+    add('Yes, order 60','me');
+    botSay(`Purchase order <b>PO-1043</b> sent to Al Nour Supplies: 60 sacks of sugar, delivery tomorrow. I'll tell you when it arrives.`,'',()=>{const po=$('#po');po.innerHTML='✓ PO-1043 · 60 sugar sacks · arriving tomorrow';po.classList.add('on');S.sugar.q+=60;setTimeout(renderStock,reduce?0:400)});
+  } else { add('Not now','me'); botSay('Okay. I\'ll remind you tomorrow at 9 am if it\'s still low.'); }
+});
+$$('#sugg button').forEach(b=>b.onclick=()=>send(b.textContent));
+$('#composer').addEventListener('submit',e=>{e.preventDefault();const i=$('#ask');send(i.value);i.value=''});
+// opening state
+add('Good morning ☀️ Stock room and sales are synced. What do you need?','bot');
+
+/* ---------- Website filter ---------- */
+$$('#chips .chip').forEach(c=>c.onclick=()=>{
+  $$('#chips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c));
+  $$('#sites .site').forEach(s=>s.hidden=!(c.dataset.f==='all'||s.dataset.k===c.dataset.f));
+});
+
+/* ---------- Problems we fix ---------- */
+const C=[
+ {t:'Orders get lost in WhatsApp',s:'Sales & customer service',
+  h:'From messy DMs to a pipeline where no order is forgotten.',
+  b:['Orders arrive in DMs, calls and comments','Nobody knows which order is confirmed, paid or shipped','Customers ask "where is my order?" again and again'],
+  a:['Every order lands in one CRM with a status and an owner','Customers get automatic WhatsApp updates at each step','You see late and stuck orders at a glance'],
+  f:['WhatsApp / IG / website','CRM order pipeline','Auto status message','Daily summary']},
+ {t:'Stock is counted on paper',s:'Factories & warehouses',
+  h:'A stock room you can ask questions, from your phone.',
+  b:['Counts live in notebooks and Excel files','You run out of materials before anyone notices','Checking stock means a phone call to the warehouse'],
+  a:['Stock in and out is recorded through a simple bot','Low stock triggers an alert and a draft purchase order','Ask "how much sugar is left?" at 11 pm and get the answer'],
+  f:['Bot message','Inventory system','Below minimum?','Alert + purchase order']},
+ {t:'Branches don\'t talk to each other',s:'Retail & multi-branch',
+  h:'One POS for every branch, one view of all sales.',
+  b:['Each branch has its own cashier and its own numbers','Stock moves between branches without a record','End-of-day totals arrive late and by hand'],
+  a:['A POS synced across branches and with the stock','Transfers between branches are tracked','Owner sees every branch live on one dashboard'],
+  f:['POS sale','Central stock','Branch dashboard','End-of-day report']},
+ {t:'Leads wait hours for a reply',s:'Marketing & sales',
+  h:'An AI agent that answers in seconds, then hands off.',
+  b:['Ads bring messages at night and on weekends','Slow replies mean leads go to competitors','The team answers the same 10 questions every day'],
+  a:['An AI agent replies instantly in Egyptian Arabic or English','It qualifies the lead and books a call','Hot leads go straight to a salesperson with the full chat'],
+  f:['Ad / message','AI agent','Qualified?','Sales team + CRM']},
+ {t:'Reports take a full day',s:'Management',
+  h:'Numbers that build themselves, every morning.',
+  b:['Someone copies numbers from 4 systems into Excel','Reports are late, and often wrong','Decisions wait for the report'],
+  a:['A live dashboard pulls sales, stock, ads and team data','The weekly report is sent automatically','Clear alerts when a number moves the wrong way'],
+  f:['Sales + stock + ads','Data model','Live dashboard','Scheduled report']},
+ {t:'Running the business on Excel',s:'Growing companies',
+  h:'A custom ERP shaped around how you actually work.',
+  b:['Purchasing, production and accounts in separate files','Mistakes repeat because nothing is connected','New staff take weeks to learn "the system"'],
+  a:['One ERP for inventory, purchasing, production and HR','Each role sees only the screens it needs','Built in stages, starting with what saves the most time'],
+  f:['UI/UX prototype','ERP modules','Roles & permissions','Training']}
+];
+const tabs=$('#caseTabs'), view=$('#caseView');
+C.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.id='ct'+i;b.setAttribute('aria-selected',i===0);b.tabIndex=i?-1:0;b.innerHTML=`<small>0${i+1}</small><span><b>${c.t}</b><span>${c.s}</span></span>`;b.onclick=()=>showCase(i);
+  b.onkeydown=e=>{if(/Arrow(Down|Right|Up|Left)/.test(e.key)){e.preventDefault();const n=(i+(/Down|Right/.test(e.key)?1:-1)+C.length)%C.length;tabs.children[n].focus();showCase(n)}};tabs.appendChild(b)});
+function showCase(i){
+  [...tabs.children].forEach((b,k)=>{b.setAttribute('aria-selected',k===i);b.tabIndex=k===i?0:-1});
+  const c=C[i]; view.setAttribute('aria-labelledby','ct'+i);
+  view.innerHTML=`<span class="mono">${c.s}</span><h3>${c.h}</h3>
+    <div class="ba"><div class="before"><small>Before</small><ul>${c.b.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="after"><small>With Polloi Tech</small><ul>${c.a.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>
+    <div class="flow" aria-label="How it works">${c.f.map((x,k)=>`${k?'<em>→</em>':''}<span>${x}</span>`).join('')}</div>`;
+}
+showCase(0);
+
+/* ---------- Automations ---------- */
+const A=[
+ ['Low-stock alert + purchase order','Stock drops below minimum','WhatsApp alert, draft PO to supplier'],
+ ['New order → invoice + customer message','Order paid on store or POS','Invoice created, WhatsApp confirmation sent'],
+ ['Daily sales report at 9 pm','Every day, 9:00 pm','Sales, top items and cash to the owner'],
+ ['Abandoned cart reminder','Cart left for 2 hours','WhatsApp reminder with the cart link'],
+ ['Meta lead → CRM + instant reply','New lead from a Facebook / IG form','Lead saved in CRM, AI agent replies'],
+ ['Shipping status updates','Courier status changes','Customer told: shipped, out for delivery, delivered'],
+ ['Staff attendance by bot','Employee checks in on WhatsApp','Time and location logged, monthly sheet ready'],
+ ['Payment reminders','Invoice due in 3 days','Polite reminder, then escalation if unpaid'],
+ ['Review request after delivery','Order delivered','Ask for a review, flag unhappy replies']
+];
+const autos=$('#autos'); const on=new Set([0,2]);
+A.forEach(([t,tr,ac],i)=>{const d=document.createElement('div');d.className='auto';d.innerHTML=`<div class="auto-top"><b>${t}</b><button type="button" class="sw" role="switch" aria-label="${t}"></button></div><div class="trig"><span><i>When</i> ${tr}</span><span><i>Then</i> ${ac}</span></div><span class="st"></span>`;autos.appendChild(d);
+  const sw=d.querySelector('.sw'); sw.onclick=()=>{on.has(i)?on.delete(i):on.add(i);paint()};});
+function paint(){
+  [...autos.children].forEach((d,i)=>{const o=on.has(i);d.classList.toggle('on',o);d.querySelector('.sw').setAttribute('aria-checked',o);d.querySelector('.st').textContent=o?'● In your pack':'○ Off'});
+  $('#autoCount').textContent=on.size;
+  const list=[...on].map(i=>'- '+A[i][0]).join('\n');
+  $('#autoAsk').href='https://wa.me/201093322570?text='+encodeURIComponent('Hi Polloi Tech, I want these automations:\n'+list);
+}
+paint();
+})();
+</script>
+</body>
+</html>
